@@ -3,7 +3,7 @@ import sys
 import numpy as np
 import cv2
 import argparse
-import keras
+import tensorflow as tf
 
 from random import choice
 from os.path import isfile, isdir, basename, splitext
@@ -25,12 +25,12 @@ def load_network(modelpath,input_dim):
 	input_shape = (input_dim,input_dim,3)
 
 	# Fixed input size for training
-	inputs  = keras.layers.Input(shape=(input_dim,input_dim,3))
+	inputs  = tf.keras.layers.Input(shape=(input_dim,input_dim,3))
 	outputs = model(inputs)
 
 	output_shape = tuple([s for s in outputs.shape[1:]])
 	output_dim   = output_shape[1]
-	model_stride = input_dim / output_dim
+	model_stride = input_dim // output_dim
 
 	assert input_dim % output_dim == 0, \
 		'The output resolution must be divisible by the input resolution'
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
 	model,model_stride,xshape,yshape = load_network(args.model,dim)
 
-	opt = getattr(keras.optimizers,args.optimizer)(lr=args.learning_rate)
+	opt = getattr(tf.keras.optimizers,args.optimizer)(lr=args.learning_rate)
 	model.compile(loss=loss, optimizer=opt)
 
 	print('Checking input directory...')

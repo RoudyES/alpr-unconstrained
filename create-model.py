@@ -1,10 +1,10 @@
 
 import sys
-import keras
+import tensorflow as tf
 
-from keras.layers import Conv2D, MaxPooling2D, BatchNormalization, Add, Activation, Concatenate, Input
-from keras.models import Model
-from keras.applications.mobilenet import MobileNet
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, BatchNormalization, Add, Activation, Concatenate, Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.applications.mobilenet import MobileNet
 
 from src.keras_utils import save_model
 
@@ -70,7 +70,7 @@ def create_model_mobnet():
 
 	mbnet = MobileNet(input_shape=(224,224,3),include_top=True)
 	
-	backbone = keras.models.clone_model(mbnet)
+	backbone = tf.keras.models.clone_model(mbnet)
 	for i,bblayer in enumerate(backbone.layers[1:74]):
 		layer = bblayer.__class__.from_config(bblayer.get_config())
 		layer.name = 'backbone_' + layer.name
