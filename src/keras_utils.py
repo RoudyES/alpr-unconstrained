@@ -4,6 +4,7 @@ import cv2
 import time
 import tensorflow as tf
 
+from tensorflow.keras.models import model_from_json
 from os.path import splitext
 
 from src.label import Label
@@ -28,7 +29,6 @@ def save_model(model,path,verbose=0):
 	if verbose: print('Saved to %s' % path)
 
 def load_model(path,custom_objects={},verbose=0):
-	from tf.keras.models import model_from_json
 
 	path = splitext(path)[0]
 	with open('%s.json' % path,'r') as json_file:
