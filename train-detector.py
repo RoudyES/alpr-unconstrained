@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
 	model,model_stride,xshape,yshape = load_network(args.model,dim)
 
-	opt = getattr(tf.keras.optimizers,args.optimizer)(lr=args.learning_rate)
+	opt = getattr(tf.keras.optimizers,args.optimizer)(learning_rate=args.learning_rate)
 	model.compile(loss=loss, optimizer=opt)
 
 	print('Checking input directory...')
